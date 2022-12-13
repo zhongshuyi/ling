@@ -1,13 +1,13 @@
-import { createApp } from 'vue'
 import App from './App.vue'
 
 import 'virtual:windi.css'
 import '@/design/index.less'
 
-// import { setupStore } from '@/store'
 import { initAppConfigStore } from './logics/initAppConfig'
-import { setupStore } from './store'
 import { setupRouter } from './router'
+
+import '@purge-icons/generated'
+import 'virtual:svg-icons-register'
 
 const app = createApp(App)
 

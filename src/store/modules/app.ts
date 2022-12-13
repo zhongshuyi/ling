@@ -1,11 +1,4 @@
-import { defineStore } from 'pinia'
-
-import { useBreakpoints } from '@vueuse/core'
-
-import { store } from '@/store'
 import { ThemeEnum } from '@/enums/appEnum'
-import { screenObj, sizeEnum } from '@/enums/breakpointEnum'
-import { APP_DARK_MODE_KEY_ } from '@/enums/cacheEnum'
 import setting from '@/settings/projectSetting'
 import { Ref } from 'vue'
 
@@ -15,32 +8,20 @@ interface AppState {
 
 export const useAppStore = defineStore({
   id: 'app',
+  persist: {
+    key: 'pinia-store-app',
+    storage: localStorage
+  },
   state: (): AppState => ({
     theme: undefined
   }),
   getters: {
     /**
-     * 获取主题，获取顺序：store -> localStorage -> defaultSetting
+     * 获取主题
      * @returns 主题
      */
     getTheme(): ThemeEnum | string {
-      return this.theme || localStorage.getItem(APP_DARK_MODE_KEY_) || setting.defaultTheme
-    },
-    /**
-     * 获取当前主题，如果是主题跟随系统，则获取真实状态（明或暗）
-     * @returns
-     */
-    getThemeState(): ThemeEnum | string {
-      if (this.getTheme === ThemeEnum.SYSTEM) {
-        const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
-        if (themeMedia.matches) {
-          return ThemeEnum.LIGHT
-        } else {
-          return ThemeEnum.DARK
-        }
-      } else {
-        return this.getTheme
-      }
+      return this.theme || setting.defaultTheme
     },
     /** 获取当前宽度是否属于移动端 */
     getIsMobile(): Ref<boolean> {
@@ -52,13 +33,17 @@ export const useAppStore = defineStore({
     setTheme(mode: ThemeEnum | string): void {
       console.log(mode)
       this.theme = mode
-      localStorage.setItem(APP_DARK_MODE_KEY_, mode)
-      switch (this.getThemeState) {
+      const isDark = useDark()
+      switch (mode) {
+        case ThemeEnum.SYSTEM:
+          const systemIsDark = usePreferredDark()
+          systemIsDark.value ? (isDark.value = true) : (isDark.value = false)
+          break
         case ThemeEnum.DARK:
-          document.documentElement.classList.add('dark')
+          isDark.value = true
           break
         case ThemeEnum.LIGHT:
-          document.documentElement.classList.remove('dark')
+          isDark.value = false
           break
       }
     },

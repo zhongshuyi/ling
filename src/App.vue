@@ -1,17 +1,13 @@
 <template>
-  <div>
-    <div class="w-10 h-10 bg-gray-500 m-auto" @click="appStore.toggleTheme()"> {{ isMobile }}</div>
+  <div
+    ><SvgIcon name="dark" size="60" class="text-dark-100" @click="appStore.toggleTheme()" />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { useAppStoreWithOut } from '@/store/modules/app'
+  import SvgIcon from './components/Icon/src/SvgIcon.vue'
+
   const appStore = useAppStoreWithOut()
-
-  const isMobile = appStore.getIsMobile
-
-  // const isDark = useDark()
-  // useToggle(is)
 </script>
 
 <style scoped></style>
