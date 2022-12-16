@@ -1,6 +1,5 @@
 import { PluginOption } from 'vite'
 
-import vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
 import purgeIcons from 'vite-plugin-purge-icons'
 
@@ -9,10 +8,14 @@ import { configHtmlPlugin } from './html'
 import { configComponentsPlugin } from './components'
 import { autoImportPlugin } from './autoImport'
 import { configSvgIconsPlugin } from './svgSprite'
+import { configVuePlugin } from './vue'
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   /** 插件数组 */
-  const vitePlugins: (PluginOption | PluginOption[])[] = [vue()]
+  const vitePlugins: (PluginOption | PluginOption[])[] = []
+
+  // Vue 支持
+  vitePlugins.push(configVuePlugin())
 
   // API 自动引入
   vitePlugins.push(autoImportPlugin())

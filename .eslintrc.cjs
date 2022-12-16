@@ -116,6 +116,8 @@ module.exports = defineConfig({
       }
     ],
     // 使用script-setup需要引入这个,当组件未使用或者变量未使用时做的操作
-    'vue/script-setup-uses-vars': 'error'
+    'vue/script-setup-uses-vars': 'error',
+    //关闭eslint检查文件名是否为驼峰命名
+    'vue/multi-word-component-names': 'off'
   }
 })

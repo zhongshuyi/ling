@@ -1,13 +1,15 @@
 <template>
-  <div
-    ><SvgIcon name="dark" size="60" class="text-dark-100" @click="appStore.toggleTheme()" />
+  <div class="flex flex-row">
+    <textarea v-model="md" class="w-1/2"></textarea>
+
+    <Markdown :content="md" class="w-1/2" />
   </div>
 </template>
 
 <script setup lang="ts">
-  import SvgIcon from './components/Icon/src/SvgIcon.vue'
+  import Markdown from './components/markdown/Markdown.vue'
 
-  const appStore = useAppStoreWithOut()
+  const md = ref<string>('请输入')
 </script>
 
 <style scoped></style>

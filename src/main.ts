@@ -1,13 +1,18 @@
+import { createApp } from 'vue/dist/vue.esm-bundler'
+// import { createApp } from 'vue'
+
 import App from './App.vue'
 
 import 'virtual:windi.css'
 import '@/design/index.less'
 
 import { initAppConfigStore } from './logics/initAppConfig'
+import { customElement } from './logics/customElement'
 import { setupRouter } from './router'
 
 import '@purge-icons/generated'
 import 'virtual:svg-icons-register'
+import { registerGlobComp } from './components/registerGlobComp'
 
 const app = createApp(App)
 
@@ -20,5 +25,9 @@ initAppConfigStore()
 // Configure routing
 // 配置路由
 setupRouter(app)
+
+registerGlobComp(app)
+
+customElement(app)
 
 app.mount('#app', true)
