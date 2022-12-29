@@ -4,6 +4,7 @@ import { Ref } from 'vue'
 
 interface AppState {
   theme?: ThemeEnum | string
+  showSiderDrawer: Ref<boolean>
 }
 
 export const useAppStore = defineStore({
@@ -13,7 +14,8 @@ export const useAppStore = defineStore({
     storage: localStorage
   },
   state: (): AppState => ({
-    theme: undefined
+    theme: undefined,
+    showSiderDrawer: ref(false)
   }),
   getters: {
     /**
@@ -22,6 +24,14 @@ export const useAppStore = defineStore({
      */
     getTheme(): ThemeEnum | string {
       return this.theme || setting.defaultTheme
+    },
+    // 获取当前主题
+    getRealTheme(): ThemeEnum {
+      const systemDark = usePreferredDark()
+      if (this.theme === ThemeEnum.SYSTEM) {
+        return systemDark.value ? ThemeEnum.DARK : ThemeEnum.LIGHT
+      }
+      return this.theme as ThemeEnum
     },
     /** 获取当前宽度是否属于移动端 */
     getIsMobile(): Ref<boolean> {
@@ -34,11 +44,7 @@ export const useAppStore = defineStore({
       console.log(mode)
       this.theme = mode
       const isDark = useDark()
-      switch (mode) {
-        case ThemeEnum.SYSTEM:
-          const systemIsDark = usePreferredDark()
-          systemIsDark.value ? (isDark.value = true) : (isDark.value = false)
-          break
+      switch (this.getRealTheme) {
         case ThemeEnum.DARK:
           isDark.value = true
           break

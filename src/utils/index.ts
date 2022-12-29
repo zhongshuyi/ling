@@ -36,3 +36,36 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
   }
   return src
 }
+
+/**根据url 触发下载 */
+export const download = (url: string) =>
+  new Promise((resolve, reject) => {
+    fetch(url)
+      .then((res) => res.blob())
+      .then((file) => {
+        const tempUrl = URL.createObjectURL(file)
+        const aTag = document.createElement('a')
+        aTag.href = tempUrl
+        aTag.download = new Date().getTime() + ''
+        document.body.appendChild(aTag)
+        aTag.click()
+        URL.revokeObjectURL(tempUrl)
+        aTag.remove()
+        resolve('下载成功')
+      })
+      .catch(() => {
+        reject()
+      })
+  })
+
+/** 跨域备选方案 */
+export const download_jump = (url: string) => {
+  const link = document.createElement('a')
+  link.setAttribute('href', url)
+  link.setAttribute('target', '_blank')
+  link.setAttribute('download', new Date().getTime() + '')
+  link.style.display = 'none'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}

@@ -1,3 +1,4 @@
+// 自动引入 https://github.com/antfu/unplugin-auto-import
 import AutoImport from 'unplugin-auto-import/vite'
 import { PluginOption } from 'vite'
 

@@ -35,6 +35,7 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     server: {
+      https: true,
       // 指定服务器应该监听哪个 IP 地址。 如果将此设置为 0.0.0.0 将监听所有地址，包括局域网和公网地址。
       host: true,
       port: VITE_PORT,

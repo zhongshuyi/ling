@@ -7,14 +7,12 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Markdown: typeof import('./../src/components/markdown/Markdown.vue')['default']
-    MyCode: typeof import('./../src/components/markdown/MyCode.vue')['default']
-    MyIcon: typeof import('../src/components/markdown/MyCode.vueconOld.vue')['default']
+    AppProvider: typeof import('./../src/components/Application/AppProvider.vue')['default']
+    Link: typeof import('./../src/components/Basic/Link.vue')['default']
+    Markdown: typeof import('./../src/components/Markdown/Markdown.vue')['default']
+    MyCode: typeof import('./../src/components/Markdown/MyCode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./../src/components/Icon/src/SvgIcon.vue')['default']
-    Test: typeof import('../src/components/md/Test.md')['default']
-    TestA: typeof import('./../src/components/TestA.vue')['default']
-    VditorComponent: typeof import('./../src/components/markdown/VditorComponent.vue')['default']
   }
 }

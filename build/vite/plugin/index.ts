@@ -2,6 +2,8 @@ import { PluginOption } from 'vite'
 
 import WindiCSS from 'vite-plugin-windicss'
 import purgeIcons from 'vite-plugin-purge-icons'
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 import { configHtmlPlugin } from './html'
 
@@ -16,6 +18,9 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
   // Vue 支持
   vitePlugins.push(configVuePlugin())
+
+  // 组件名插件
+  vitePlugins.push(VueSetupExtend())
 
   // API 自动引入
   vitePlugins.push(autoImportPlugin())
@@ -34,6 +39,9 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
   // vite-plugin-svg-icons
   vitePlugins.push(configSvgIconsPlugin(isBuild))
+
+  /** https */
+  vitePlugins.push(basicSsl())
 
   return vitePlugins
 }
